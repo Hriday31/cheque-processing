@@ -1,15 +1,11 @@
-import cv2#computer vision
+from types import GeneratorType
+import cv2 #computer vision
 import numpy as np
- 
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning) 
 image = cv2.imread('/home/hra/Downloads/test.png')#read from image
 
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)#convert image to grayscal
-
-kernel = np.array([[0, -1, 0],#sharpen image
-                   [-1, 5,-1],
-                   [0, -1, 0]])
-image_sharp = cv2.filter2D(src=gray, ddepth=-1, kernel=kernel)
-
 
 img=gray
 sign=img[170:255,570:844] #image cropping
@@ -25,5 +21,9 @@ cv2.imshow('Name',name)
 cv2.imshow('Account Number',acc)
 cv2.imshow('Amount',amt)
 
+import easyocr
+reader = easyocr.Reader(['en'],gpu = False)
+r_easy_ocr=reader.readtext(name,detail=0)
+print(r_easy_ocr[0])
 cv2.waitKey(0) # waits until a key is pressed
 cv2.destroyAllWindows() # destroys the window showing image
