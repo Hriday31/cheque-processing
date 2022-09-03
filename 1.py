@@ -22,11 +22,11 @@ acc = img[180:210, 75:300]
 amt = img[135:165, 620:775]
 
 # display images
-'''cv2.imshow('Orignal Cheque',image)
+cv2.imshow('Orignal Cheque',image)
 cv2.imshow('Signature',sign)
 cv2.imshow('Name',name)
 cv2.imshow('Account Number',acc)
-cv2.imshow('Amount',amt)'''
+cv2.imshow('Amount',amt)
 
 
 def imgtotext(p):  # extracting text from collected information
@@ -60,8 +60,6 @@ def remove_white_space(image):  # Morpholigal Tranformation
 sign2 = remove_white_space(signm1)
 sign3 = remove_white_space(sign)
 
-cv2.imshow('Recorded signature', sign2)
-cv2.imshow('Sign on cheque', sign3)
 
 # Image Matching using structural similarity Index
 
@@ -69,8 +67,9 @@ cv2.imshow('Sign on cheque', sign3)
 cheque_image = cv2.resize(sign3, (100, 100))
 original_image = cv2.resize(sign2, (100, 100))
 
-'''cv2.imshow('wrong_image',wrong_image)
-cv2.imshow('original_image',original_image)'''
+cv2.imshow('Recorded signature', original_image)
+cv2.imshow('Sign on cheque', cheque_image)
+
 
 print("Error %-", ssim(cheque_image, original_image)*100)
 
