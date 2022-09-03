@@ -42,7 +42,7 @@ print("Account Number:", imgtotext(acc))
 print("Payee:", imgtotext(name))
 
 
-def remove_white_space(image):  # Morpholigal Tranformation
+def remove_white_space(image):  # Morphological Tranformation
     blur = cv2.GaussianBlur(image, (25, 25), 0)
     thresh = cv2.threshold(
         blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
