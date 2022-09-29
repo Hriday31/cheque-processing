@@ -34,7 +34,7 @@ def imgtotext(p):  # extracting text from collected information
     # pytesseract.tesseract_cmd = path_to_tesseract
     text = pytesseract.image_to_string(
         p, lang='eng', config='--psm 6 tessedit_char_whitelist=0123456789')
-    return (text[0:-2])
+    return (text[0:-1])
 
 
 print("Amount:", imgtotext(amt))
@@ -64,8 +64,8 @@ sign3 = remove_white_space(sign)
 # Image Matching using structural similarity Index
 
 # unifying dimesions for matching images
-cheque_image = cv2.resize(sign3, (100, 100))
-original_image = cv2.resize(sign2, (100, 100))
+cheque_image = cv2.resize(sign3, (12000, 12000))
+original_image = cv2.resize(sign2, (12000, 12000))
 
 cv2.imshow('Recorded signature', sign2)
 # cv2.imshow('Sign on cheque', cheque_image)
@@ -75,12 +75,14 @@ print("Match %-", ssim(cheque_image, original_image)*100)
 
 if ssim(cheque_image, original_image) >= 0.8:
     print("Signatures Matched - Transaction Approved")
+    a = [imgtotext(amt), imgtotext(acc), imgtotext(name),ssim(cheque_image, original_image)*100,"Processed"]
 elif ssim(cheque_image, original_image) >= 0.4 :
     print("Slight discrepencies-Manual approval suggested.")
+    a = [imgtotext(amt), imgtotext(acc), imgtotext(name),ssim(cheque_image, original_image)*100,"Recheck requested"]
 else:
     print("Signatures do not Match - Transaction Failed")
+    a = [imgtotext(amt), imgtotext(acc), imgtotext(name),ssim(cheque_image, original_image)*100,"Failed"]
 f = open('chequeprocessing.csv', 'a', newline='')
-a = [imgtotext(amt), imgtotext(acc), imgtotext(name)]
 csv.writer(f, delimiter=',').writerow(a)
 f.close()
 
